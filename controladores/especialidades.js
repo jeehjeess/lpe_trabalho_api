@@ -75,7 +75,7 @@ const deleteEspecialidade = (request, response) => {
 
 const getEspecialidadePorCodigo = (request, response) => {
     const codigo = parseInt(request.params.codigo);
-    pool.query(`SELECT * FROM especialide WHERE codigo = $1`,
+    pool.query(`SELECT * FROM especialidade WHERE codigo = $1`,
     [codigo],
     (error, results) => {
         if (error || results.rowCount == 0){
