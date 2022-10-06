@@ -3,7 +3,7 @@ const { pool } = require('../config');
 const getMedicos = (request, response) => {
     pool.query(`select m.codigo as codigo, m.nome as nome, 
         m.crm as crm, m.cpf as cpf, 
-        m.especialidade as especialidade, e.nome as nomeespecialide
+        m.especialidade as especialidade, e.nome as nomeespecialidade
         from medico m
         join especialidade e on m.especialidade = e.codigo
         order by m.codigo`, 
