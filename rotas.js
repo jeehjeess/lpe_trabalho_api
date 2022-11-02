@@ -1,27 +1,31 @@
 const { Router } = require('express');
 
 const controleEspecialidades = require('./controladores/especialidades');
-const controleMedicos = require("./controladores/medicos");
+const controleMedicos        = require("./controladores/medicos");
+const seguranca              = require('./controladores/seguranca');
 
 const rotas = new Router();
 
+rotas.route("/login")
+     .post(seguranca.login)
+
 rotas.route('/medicos')
-   .get(controleMedicos.getMedicos)
-   .post(controleMedicos.addMedico)
-   .put(controleMedicos.updateMedico)
+   .get(seguranca.verificaJWT, controleMedicos.getMedicos)
+   .post(seguranca.verificaJWT, controleMedicos.addMedico)
+   .put(seguranca.verificaJWT, controleMedicos.updateMedico)
 
 rotas.route('/medicos/:codigo')
-   .get(controleMedicos.getMedicoPorCodigo)
-   .delete(controleMedicos.deleteMedico)
+   .get(seguranca.verificaJWT, controleMedicos.getMedicoPorCodigo)
+   .delete(seguranca.verificaJWT,controleMedicos.deleteMedico)
 
 
 rotas.route('/especialidades')
-     .get(controleEspecialidades.getEspecialidades)
-     .post(controleEspecialidades.addEspecialidade)
-     .put(controleEspecialidades.updateEspecialidade)
+     .get(seguranca.verificaJWT, controleEspecialidades.getEspecialidades)
+     .post(seguranca.verificaJWT, controleEspecialidades.addEspecialidade)
+     .put(seguranca.verificaJWT, controleEspecialidades.updateEspecialidade)
 
 rotas.route('/especialidades/:codigo')
-     .get(controleEspecialidades.getEspecialidadePorCodigo)
-     .delete(controleEspecialidades.deleteEspecialidade)
+     .get(seguranca.verificaJWT, controleEspecialidades.getEspecialidadePorCodigo)
+     .delete(seguranca.verificaJWT, controleEspecialidades.deleteEspecialidade)
 
 module.exports = rotas;
